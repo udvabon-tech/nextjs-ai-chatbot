@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useActionState, useEffect, useState } from 'react';
 import { toast } from '@/components/toast';
+import { signIn } from 'next-auth/react';
 
 import { AuthForm } from '@/components/auth-form';
 import { SubmitButton } from '@/components/submit-button';
@@ -49,6 +50,10 @@ export default function Page() {
     formAction(formData);
   };
 
+  const handleGoogleSignIn = () => {
+    signIn('google');
+  };
+
   return (
     <div className="flex h-dvh w-screen items-start pt-12 md:pt-0 md:items-center justify-center bg-background">
       <div className="w-full max-w-md overflow-hidden rounded-2xl flex flex-col gap-12">
@@ -71,6 +76,14 @@ export default function Page() {
             {' for free.'}
           </p>
         </AuthForm>
+        <div className="flex justify-center">
+          <button
+            onClick={handleGoogleSignIn}
+            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          >
+            Sign in with Google
+          </button>
+        </div>
       </div>
     </div>
   );
