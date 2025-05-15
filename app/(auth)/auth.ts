@@ -80,7 +80,7 @@ export const {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id as string;
-        token.type = user.type;
+        token.type = user.type ?? 'regular';
       }
 
       return token;
