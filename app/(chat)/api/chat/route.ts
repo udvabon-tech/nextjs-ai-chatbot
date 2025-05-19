@@ -87,13 +87,19 @@ export async function POST(request: Request) {
       differenceInHours: 24,
     });
 
-    if (messageCount > entitlementsByUserType[userType].maxMessagesPerDay) {
+    // TEMPORARY: Rate limit check bypassed
+    const bypassRateLimit = true; // Set to false to re-enable rate limiting
+
+    if (!bypassRateLimit && messageCount > entitlementsByUserType[userType].maxMessagesPerDay) {
       return new Response(
         'You have exceeded your maximum number of messages for the day! Please try again later.',
         {
           status: 429,
         },
       );
+    } else if (messageCount > entitlementsByUserType[userType].maxMessagesPerDay) {
+      // Log that rate limiting would have been triggered but was bypassed
+      console.log(`RATE LIMIT BYPASSED: User ${session.user.id} (${userType}) exceeded limit with ${messageCount} messages`);
     }
 
     const chat = await getChatById({ id });
