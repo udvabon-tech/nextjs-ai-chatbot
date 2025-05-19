@@ -23,7 +23,20 @@ export const postRequestBodySchema = z.object({
       )
       .optional(),
   }),
-  selectedChatModel: z.enum(['chat-model', 'chat-model-reasoning']),
+  selectedChatModel: z.enum([
+    // Legacy models
+    'chat-model', 
+    'chat-model-reasoning',
+    // OpenAI models
+    'gpt-4o',
+    'o3',
+    'o4-mini',
+    'o4-mini-high',
+    // Google models
+    'gemini-2.5-flash-preview-04-17',
+    'gemini-2.5-pro-preview-05-06',
+    'gemini-2.0-flash'
+  ]),
   selectedVisibilityType: z.enum(['public', 'private']),
 });
 
