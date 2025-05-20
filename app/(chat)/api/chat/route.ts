@@ -35,6 +35,7 @@ import {
 import { after } from 'next/server';
 import type { Chat } from '@/lib/db/schema';
 import { differenceInSeconds } from 'date-fns';
+import { cookies } from 'next/headers';
 
 export const maxDuration = 60;
 
@@ -138,6 +139,8 @@ export async function POST(request: Request) {
       country,
     };
 
+    const lang = cookies().get('lang')?.value ?? 'en';
+
     await saveMessages({
       messages: [
         {
@@ -158,7 +161,7 @@ export async function POST(request: Request) {
       execute: (dataStream) => {
         const result = streamText({
           model: myProvider.languageModel(selectedChatModel),
-          system: systemPrompt({ selectedChatModel, requestHints }),
+          system: systemPrompt({ selectedChatModel, requestHints, lang }),
           messages,
           maxSteps: 5,
           experimental_activeTools:

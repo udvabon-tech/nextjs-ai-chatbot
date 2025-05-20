@@ -32,8 +32,10 @@ This is a guide for using artifacts tools: \`createDocument\` and \`updateDocume
 Do not update document right after creating it. Wait for user feedback or request to update it.
 `;
 
-export const regularPrompt =
-  'You are a friendly assistant! Keep your responses concise and helpful.';
+export const regularPrompt = (lang: string) =>
+  lang === 'bn'
+    ? 'আপনি একজন সহায়ক সহকারী! আপনার উত্তরগুলো সংক্ষিপ্ত এবং তথ্যবহুল রাখুন। সব উত্তর বাংলায় দিন।'
+    : 'You are a friendly assistant! Keep your responses concise and helpful.';
 
 export interface RequestHints {
   latitude: Geo['latitude'];
@@ -53,16 +55,19 @@ About the origin of user's request:
 export const systemPrompt = ({
   selectedChatModel,
   requestHints,
+  lang = 'en',
 }: {
   selectedChatModel: string;
   requestHints: RequestHints;
+  lang?: string;
 }) => {
   const requestPrompt = getRequestPromptFromHints(requestHints);
+  const basePrompt = regularPrompt(lang);
 
   if (selectedChatModel === 'chat-model-reasoning') {
-    return `${regularPrompt}\n\n${requestPrompt}`;
+    return `${basePrompt}\n\n${requestPrompt}`;
   } else {
-    return `${regularPrompt}\n\n${requestPrompt}\n\n${artifactsPrompt}`;
+    return `${basePrompt}\n\n${requestPrompt}\n\n${artifactsPrompt}`;
   }
 };
 

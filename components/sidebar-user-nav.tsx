@@ -5,6 +5,7 @@ import Image from 'next/image';
 import type { User } from 'next-auth';
 import { signOut, useSession } from 'next-auth/react';
 import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 import {
   DropdownMenu,
@@ -22,11 +23,25 @@ import { useRouter } from 'next/navigation';
 import { toast } from './toast';
 import { LoaderIcon } from './icons';
 import { guestRegex } from '@/lib/constants';
+import { saveLanguageAsCookie } from '@/app/(chat)/actions';
 
 export function SidebarUserNav({ user }: { user: User }) {
   const router = useRouter();
   const { data, status } = useSession();
   const { setTheme, theme } = useTheme();
+  const [lang, setLang] = useState<'en' | 'bn'>('en');
+
+  useEffect(() => {
+    const match = document.cookie
+      .split('; ')
+      .find((c) => c.startsWith('lang='));
+    if (match) {
+      const value = match.split('=')[1];
+      if (value === 'bn' || value === 'en') {
+        setLang(value as 'bn' | 'en');
+      }
+    }
+  }, []);
 
   const isGuest = guestRegex.test(data?.user?.email ?? '');
 
@@ -77,6 +92,17 @@ export function SidebarUserNav({ user }: { user: User }) {
               onSelect={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >
               {`Toggle ${theme === 'light' ? 'dark' : 'light'} mode`}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              data-testid="user-nav-item-language"
+              className="cursor-pointer"
+              onSelect={() => {
+                const next = lang === 'en' ? 'bn' : 'en';
+                setLang(next);
+                saveLanguageAsCookie(next);
+              }}
+            >
+              {`Switch to ${lang === 'en' ? 'Bangla' : 'English'}`}
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild data-testid="user-nav-item-auth">
