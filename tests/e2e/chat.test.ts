@@ -98,6 +98,20 @@ test.describe('Chat activity', () => {
     expect(assistantMessage.content).toBe('This painting is by Monet!');
   });
 
+  test('Upload pdf and doc attachments', async () => {
+    await chatPage.addPdfAttachment();
+    await chatPage.addDocAttachment();
+
+    await chatPage.isElementVisible('attachments-preview');
+    await chatPage.isElementVisible('input-attachment-loader');
+    await chatPage.isElementNotVisible('input-attachment-loader');
+
+    await chatPage.sendUserMessage('Check my files');
+
+    const userMessage = await chatPage.getRecentUserMessage();
+    expect(userMessage.attachments).toHaveLength(2);
+  });
+
   test('Call weather tool', async () => {
     await chatPage.sendUserMessage("What's the weather in sf?");
     await chatPage.isGenerationComplete();
