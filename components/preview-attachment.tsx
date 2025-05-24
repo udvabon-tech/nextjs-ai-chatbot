@@ -1,6 +1,6 @@
 import type { Attachment } from 'ai';
 
-import { LoaderIcon } from './icons';
+import { LoaderIcon, FileIcon } from './icons';
 
 export const PreviewAttachment = ({
   attachment,
@@ -24,8 +24,18 @@ export const PreviewAttachment = ({
               alt={name ?? 'An image attachment'}
               className="rounded-md size-full object-cover"
             />
+          ) : url ? (
+            <a
+              key={url}
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-muted-foreground"
+            >
+              <FileIcon />
+            </a>
           ) : (
-            <div className="" />
+            <FileIcon />
           )
         ) : (
           <div className="" />
