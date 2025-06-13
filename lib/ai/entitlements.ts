@@ -15,16 +15,11 @@ export const entitlementsByUserType: Record<UserType, Entitlements> = {
     availableChatModelIds: [
       // Default model
       'gpt-4o',
-      // Legacy models
-      'chat-model', 
-      'chat-model-reasoning',
       // OpenAI models
       'o3',
       'o4-mini',
       'o4-mini-high',
       // Google models
-      'gemini-2.5-flash-preview-04-17',
-      'gemini-2.5-pro-preview-05-06',
       'gemini-2.0-flash'
     ],
   },
@@ -37,16 +32,11 @@ export const entitlementsByUserType: Record<UserType, Entitlements> = {
     availableChatModelIds: [
       // Default model
       'gpt-4o',
-      // Legacy models
-      'chat-model', 
-      'chat-model-reasoning',
       // OpenAI models
       'o3',
       'o4-mini',
       'o4-mini-high',
       // Google models
-      'gemini-2.5-flash-preview-04-17',
-      'gemini-2.5-pro-preview-05-06',
       'gemini-2.0-flash'
     ],
   },

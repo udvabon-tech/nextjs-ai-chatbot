@@ -36,35 +36,9 @@ export const chatModels: Array<ChatModel> = [
   
   // Google Models
   {
-    id: 'gemini-2.5-flash-preview-04-17',
-    name: 'Gemini 1.5 Flash',
-    description: 'Google\'s fast multimodal model',
-    provider: 'google',
-  },
-  {
-    id: 'gemini-2.5-pro-preview-05-06',
-    name: 'Gemini 1.5 Pro',
-    description: 'Google\'s advanced multimodal model',
-    provider: 'google',
-  },
-  {
     id: 'gemini-2.0-flash',
     name: 'Gemini 1.0 Pro',
     description: 'Google\'s efficient multimodal model',
     provider: 'google',
-  },
-  
-  // Legacy Models (keeping for backward compatibility)
-  {
-    id: 'chat-model',
-    name: 'Legacy Chat model',
-    description: 'Primary model for all-purpose chat',
-    provider: 'xai',
-  },
-  {
-    id: 'chat-model-reasoning',
-    name: 'Legacy Reasoning model',
-    description: 'Uses advanced reasoning',
-    provider: 'xai',
   },
 ];
