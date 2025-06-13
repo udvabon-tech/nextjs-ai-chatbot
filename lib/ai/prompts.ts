@@ -64,7 +64,7 @@ export const systemPrompt = ({
   const requestPrompt = getRequestPromptFromHints(requestHints);
   const basePrompt = regularPrompt(lang);
 
-  if (selectedChatModel === 'chat-model-reasoning') {
+  if (selectedChatModel === 'o3') {
     return `${basePrompt}\n\n${requestPrompt}`;
   } else {
     return `${basePrompt}\n\n${requestPrompt}\n\n${artifactsPrompt}`;
