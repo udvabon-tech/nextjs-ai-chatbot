@@ -27,6 +27,7 @@ import {
   type DBMessage,
   type Chat,
   stream,
+  post,
 } from './schema';
 import type { ArtifactKind } from '@/components/artifact';
 import { generateUUID } from '../utils';
@@ -506,6 +507,54 @@ export async function getStreamIdsByChatId({ chatId }: { chatId: string }) {
     return streamIds.map(({ id }) => id);
   } catch (error) {
     console.error('Failed to get stream ids by chat id from database');
+    throw error;
+  }
+}
+
+export async function createPost({
+  title,
+  slug,
+  content,
+  page,
+}: {
+  title: string;
+  slug: string;
+  content: string;
+  page: string;
+}) {
+  try {
+    return await db.insert(post).values({
+      createdAt: new Date(),
+      title,
+      slug,
+      content,
+      page,
+    });
+  } catch (error) {
+    console.error('Failed to create post in database');
+    throw error;
+  }
+}
+
+export async function getPostsByPage({ page }: { page: string }) {
+  try {
+    return await db
+      .select()
+      .from(post)
+      .where(eq(post.page, page))
+      .orderBy(desc(post.createdAt));
+  } catch (error) {
+    console.error('Failed to get posts by page from database');
+    throw error;
+  }
+}
+
+export async function getPostBySlug({ slug }: { slug: string }) {
+  try {
+    const [p] = await db.select().from(post).where(eq(post.slug, slug));
+    return p;
+  } catch (error) {
+    console.error('Failed to get post by slug from database');
     throw error;
   }
 }
